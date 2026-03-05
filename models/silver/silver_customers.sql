@@ -1,6 +1,5 @@
 SELECT
     CAST(customer_id AS VARCHAR(255)) AS customer_id,
-    
     CONCAT(first_name,' ',last_name) AS full_name,
 
     COALESCE(
