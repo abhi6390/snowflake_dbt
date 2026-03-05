@@ -1,0 +1,9 @@
+sources:
+  - name: banking
+    database: BANKING_DB
+    schema: RAW_BANKING_DATA
+    tables:
+      - name: raw_customers
+      - name: raw_accounts
+      - name: raw_transactions
+      - name: raw_daily_balances
