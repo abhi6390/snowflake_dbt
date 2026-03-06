@@ -1,3 +1,7 @@
+with copper_accounts as (
+    select * FROM {{ ref('bronze_accounts') }}
+)
+
 SELECT
     CAST(account_id AS VARCHAR(255)) AS account_id,
     CAST(customer_id AS VARCHAR(255)) AS customer_id,
@@ -25,6 +29,8 @@ SELECT
         ELSE 'UNKNOWN'
     END AS status,
 
-    COALESCE(branch_code, 'OTHER') AS branch_code
+    COALESCE(branch_code, 'OTHER') AS branch_code,
 
-from {{ source('banking','raw_accounts') }}
+    CURRENT_TIMESTAMP AS pipeline_updated_at
+
+from copper_accounts

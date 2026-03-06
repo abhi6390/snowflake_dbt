@@ -1,3 +1,7 @@
+with copper_daily_balances as (
+    select * FROM {{ ref('bronze_daily_balances') }}
+)
+
 SELECT 
     CAST(account_id as VARCHAR(255)) as account_id,
 
@@ -18,6 +22,7 @@ SELECT
         WHEN UPPER(currency) IN ('₹','INR','IN') THEN 'INR'
         WHEN UPPER(currency) IN ('$','USD') THEN 'USD'
         ELSE 'OTHER'
-    END AS currency
+    END AS currency,
+    CURRENT_TIMESTAMP AS pipeline_updated_at
 
-from {{ source('banking','raw_daily_balances') }}
+from copper_daily_balances

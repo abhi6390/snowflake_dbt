@@ -1,3 +1,7 @@
+with copper_transactions as (
+    select * FROM {{ ref('bronze_transactions') }}
+)
+
 SELECT
     CAST(transaction_id AS VARCHAR(255)) AS transaction_id,
     CAST(account_id as VARCHAR(255)) as account_id,
@@ -28,6 +32,9 @@ SELECT
 
     UPPER(channel) AS channel,
 
-    COALESCE(UPPER(merchant), 'OTHER') as merchant
+    COALESCE(UPPER(merchant), 'OTHER') as merchant,
 
-from {{ source('banking','raw_transactions') }}
+    CURRENT_TIMESTAMP AS pipeline_updated_at
+
+
+from copper_transactions

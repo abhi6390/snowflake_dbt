@@ -1,3 +1,7 @@
+with copper_customers as (
+    select * FROM {{ ref('bronze_customers') }}
+)
+
 SELECT
     CAST(customer_id AS VARCHAR(255)) AS customer_id,
     CONCAT(first_name,' ',last_name) AS full_name,
@@ -29,6 +33,8 @@ SELECT
     TRY_TO_TIMESTAMP(updated_at, 'YYYY/MM/DD'),
     TRY_TO_TIMESTAMP(updated_at, 'YYYY-MM-DD'),
     TRY_TO_TIMESTAMP(updated_at, 'DD-MM-YYYY')
-    ) AS updated_at
+    ) AS updated_at,
 
-FROM {{ source('banking','raw_customers') }}
+    CURRENT_TIMESTAMP AS pipeline_updated_at
+
+from copper_customers
