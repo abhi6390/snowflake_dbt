@@ -4,7 +4,6 @@
 COPY INTO {{ table_name }}
 FROM {{ stage_name }}
 FILE_FORMAT = (FORMAT_NAME = {{ file_format }})
-FORCE = TRUE;
 {% endset %}
 
 {{ run_query(sql) }}
