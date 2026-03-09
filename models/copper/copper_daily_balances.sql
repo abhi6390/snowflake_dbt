@@ -5,13 +5,7 @@ with copper_daily_balances as (
 SELECT 
     CAST(account_id as VARCHAR(255)) as account_id,
 
-    COALESCE(
-    TRY_TO_DATE(balance_date, 'YYYY-MM-DD'),
-    TRY_TO_DATE(balance_date, 'DD-MM-YYYY'),
-    TRY_TO_DATE(balance_date, 'YYYY/MM/DD'),
-    TRY_TO_DATE(balance_date, 'DD/MM/YYYY'),
-    TRY_TO_TIMESTAMP(balance_date, 'YYYY-MM-DD HH24:MI:SS')
-    ) AS balance_date,
+    {{ date_macro('balance_date') }} AS balance_date,
 
     CAST(
     REGEXP_REPLACE(closing_balance, '[^0-9.-]', '')

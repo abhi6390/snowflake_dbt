@@ -27,13 +27,7 @@ SELECT
         ELSE 'UNKNOWN'
     END AS status,
 
-    COALESCE(
-    TRY_TO_TIMESTAMP(updated_at),
-    TRY_TO_TIMESTAMP(updated_at, 'DD/MM/YYYY'),
-    TRY_TO_TIMESTAMP(updated_at, 'YYYY/MM/DD'),
-    TRY_TO_TIMESTAMP(updated_at, 'YYYY-MM-DD'),
-    TRY_TO_TIMESTAMP(updated_at, 'DD-MM-YYYY')
-    ) AS updated_at,
+    {{ date_macro('updated_at') }} AS updated_at,
 
     CURRENT_TIMESTAMP AS pipeline_updated_at
 

@@ -14,13 +14,7 @@ SELECT
         ELSE 'OTHER'
     END AS account_type,
 
-    COALESCE(
-    TRY_TO_DATE(open_date, 'YYYY-MM-DD'),
-    TRY_TO_DATE(open_date, 'DD-MM-YYYY'),
-    TRY_TO_DATE(open_date, 'YYYY/MM/DD'),
-    TRY_TO_DATE(open_date, 'DD/MM/YYYY'),
-    TRY_TO_TIMESTAMP(open_date, 'YYYY-MM-DD HH24:MI:SS')
-    ) AS open_date,
+    {{ date_macro('open_date') }} AS open_date,
 
     CASE
         WHEN LOWER(status) IN ('active','ac','a') THEN 'ACTIVE'
